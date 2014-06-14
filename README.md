@@ -1,4 +1,4 @@
-scron [![Build Status](https://travis-ci.org/romansky/scron.png)](https://travis-ci.org/romansky/scron)
+scron [![Build Status](https://travis-ci.org/uniformlyrandom/scron.png)](https://travis-ci.org/uniformlyrandom/scron)
 =================
 
 Cron format to time parsing implemented in scala
