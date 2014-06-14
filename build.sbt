@@ -23,7 +23,6 @@ libraryDependencies ++= Seq(
 libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
 
 resolvers ++= Seq(
-	"jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/",
 	"Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/" 
 )
 
