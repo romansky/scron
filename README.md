@@ -6,7 +6,7 @@ Cron format to time parsing implemented in scala
 ## Usage
 
 ```scala
-import com.uniformlyrandom.Scron
+import com.uniformlyrandom.scron.Scron
 
 val startTime = DateTime.now.getMillis
 val endTime = startTime + ( 60 * 60 )

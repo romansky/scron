@@ -1,4 +1,4 @@
-package com.uniformlyrandom
+package com.uniformlyrandom.scron
 
 import org.joda.time.DateTime
 import org.joda.time.Days

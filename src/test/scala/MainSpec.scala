@@ -1,4 +1,4 @@
-import com.uniformlyrandom.Scron
+import com.uniformlyrandom.scron.Scron
 import org.scalatest.FunSpec
 
 import org.joda.time.DateTime
