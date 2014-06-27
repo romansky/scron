@@ -13,7 +13,7 @@ val endTime = startTime + ( 60 * 60 )
 
 val times = Scron.parse("* * * * * *", startTime, endTime)
 // times is now filled with epoch time for every second for the next hour
-times.length = 60 * 60
+times.length == 60 * 60
 ```
 
 ## Supported Cron Formatting
