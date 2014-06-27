@@ -40,4 +40,10 @@ See [WikiPedia](http://en.wikipedia.org/wiki/Cron) for more information about th
 
 ## Installation
 
-	TBD
+Using sbt, add to `build.sbt`
+
+	"com.uniformlyrandom" %% "scron" % "0.5"
+
+
+
+	
