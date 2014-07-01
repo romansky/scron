@@ -15,9 +15,7 @@ licenses := Seq("MIT-style" -> url("http://opensource.org/licenses/mit-license.p
 
 homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
-version := "0.5"
-
-scalaVersion := "2.11.0"
+version := "0.5.1"
 
 crossScalaVersions := Seq("2.10.4", "2.11.0")
 
