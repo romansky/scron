@@ -15,7 +15,9 @@ licenses := Seq("MIT-style" -> url("http://opensource.org/licenses/mit-license.p
 
 homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
-version := "0.5.1"
+version := "0.5.2"
+
+scalaVersion := "2.11.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.0")
 
@@ -28,8 +30,8 @@ useGpg := true
 pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
-	"org.scalatest" %% "scalatest" % "2.1.5" % "test",
-	"joda-time" % "joda-time" % "2.3",
+	"org.scalatest" %% "scalatest" % "2.2.1" % "test",
+	"joda-time" % "joda-time" % "2.6",
 	"org.joda" % "joda-convert" % "1.6"
 )
 
