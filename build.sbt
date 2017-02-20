@@ -1,9 +1,7 @@
 import AssemblyKeys._
 
-import SonatypeKeys._
-
 // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
-sonatypeSettings
+xerial.sbt.Sonatype.sonatypeSettings
 
 assemblySettings
 
@@ -17,20 +15,20 @@ homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
 version := "0.5.2"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.12.1"
 
-crossScalaVersions := Seq("2.10.4", "2.11.0")
+crossScalaVersions := Seq("2.11.6", "2.12.1")
 
 publishMavenStyle := true
 
 publishArtifact in Test := false
 
-useGpg := true
+//useGpg := true
 
 pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
-	"org.scalatest" %% "scalatest" % "2.2.1" % "test",
+	"org.scalatest" %% "scalatest" % "3.0.1" % "test",
 	"joda-time" % "joda-time" % "2.6",
 	"org.joda" % "joda-convert" % "1.6"
 )
