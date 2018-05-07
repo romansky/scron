@@ -43,7 +43,7 @@ See [WikiPedia](http://en.wikipedia.org/wiki/Cron) for more information about th
 Using sbt, add to `build.sbt`
 
 	libraryDependencies ++= Seq(
-        	"com.uniformlyrandom" %% "scron" % "0.5.1"
+        	"com.uniformlyrandom" %% "scron" % "1.0.0"
 	)
 
 
