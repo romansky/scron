@@ -13,11 +13,11 @@ licenses := Seq("MIT-style" -> url("http://opensource.org/licenses/mit-license.p
 
 homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
-version := "0.6.0"
+version := "1.0.0"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.4"
 
-crossScalaVersions := Seq("2.11.6", "2.12.1")
+crossScalaVersions := Seq("2.11.6", "2.12.4")
 
 publishMavenStyle := true
 

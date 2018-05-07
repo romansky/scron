@@ -38,7 +38,7 @@ object Scron {
 
 		if (endTimeUnix < startTimeUnix) {
 			println(s"end time is ahread of start time; end time:",endTimeUnix, " start time:",startTimeUnix)
-			return List()
+			return Stream.empty[Long]
 		}
 
 		val start = new DateTime(startTimeUnix * 1000)
@@ -50,24 +50,24 @@ object Scron {
 
 		val List(seconds, minutes, hours, days, months, dows) = _genOptions(cron)
 
-		for {	iDay <- 0 to daysBetweenStartEnd
+		for {	iDay <- Stream.range(0, daysBetweenStartEnd +1)
 				zDay = start.plusDays(iDay)
 					if days.contains(zDay.getDayOfMonth)
 					if months.contains(zDay.getMonthOfYear)
 					if dows.contains(dowMap(zDay.getDayOfWeek))
 				isStartDay = Days.daysBetween(epoch, zDay.withTimeAtStartOfDay()).getDays == daysSinceEpochStart
 				isEndDay = Days.daysBetween(epoch, zDay.withTimeAtStartOfDay()).getDays == daysSinceEpochEnd
-				hour <- hours
+				hour <- hours.toStream
 					if !isStartDay || hour >= start.getHourOfDay
 					if !isEndDay || hour <= end.getHourOfDay
 				isStartHour = isStartDay && hour == start.getHourOfDay
 				isEndHour = isEndDay && hour == end.getHourOfDay
-				minute <- minutes
+				minute <- minutes.toStream
 					if !isStartHour || minute >= start.getMinuteOfHour
 					if !isEndHour || minute <= end.getMinuteOfHour
 				isStartMinute = isStartHour && minute == start.getMinuteOfHour
 				isEndMinute = isEndHour && minute == end.getMinuteOfHour
-				second <- seconds
+				second <- seconds.toStream
 					if !isStartMinute || second >= start.getSecondOfMinute
 					if !isEndMinute || second < end.getSecondOfMinute
 		} yield zDay.withHourOfDay(hour).withMinuteOfHour(minute).withSecondOfMinute(second).getMillis / 1000
