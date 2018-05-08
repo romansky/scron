@@ -13,7 +13,7 @@ licenses := Seq("MIT-style" -> url("http://opensource.org/licenses/mit-license.p
 
 homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
-version := "1.0.0"
+version := "1.0.1"
 
 scalaVersion := "2.12.4"
 

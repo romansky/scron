@@ -1,6 +1,6 @@
 package com.uniformlyrandom.scron
 
-import org.joda.time.{DateTime, Days}
+import org.joda.time.{DateTime, DateTimeZone, Days}
 
 object Scron {
 
@@ -41,9 +41,9 @@ object Scron {
 			return Stream.empty[Long]
 		}
 
-		val start = new DateTime(startTimeUnix * 1000)
-		val end = new DateTime(endTimeUnix * 1000)
-		val epoch = new DateTime(0)
+		val start = new DateTime(startTimeUnix * 1000, DateTimeZone.UTC)
+		val end = new DateTime(endTimeUnix * 1000, DateTimeZone.UTC)
+		val epoch = new DateTime(0, DateTimeZone.UTC)
 		val daysBetweenStartEnd = Days.daysBetween(start.withTimeAtStartOfDay(), end.withTimeAtStartOfDay()).getDays
 		val daysSinceEpochStart = Days.daysBetween(epoch, start.withTimeAtStartOfDay()).getDays
 		val daysSinceEpochEnd = Days.daysBetween(epoch, end.withTimeAtStartOfDay()).getDays
@@ -75,7 +75,7 @@ object Scron {
 	}
 
 	def timeToCron(unixTime: Long) : String = {
-		val inputTime = new DateTime(unixTime * 1000)
+		val inputTime = new DateTime(unixTime * 1000, DateTimeZone.UTC)
 
 		s"${inputTime.secondOfMinute.get} ${inputTime.minuteOfHour.get} " +
 			s"${inputTime.hourOfDay.get} ${inputTime.dayOfMonth.get} ${inputTime.monthOfYear.get} *"

@@ -1,7 +1,6 @@
 import com.uniformlyrandom.scron.Scron
 import org.scalatest.FunSpec
-
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 
 class MainSpec extends FunSpec {
 
@@ -40,7 +39,7 @@ class MainSpec extends FunSpec {
 
 		it("gets all seconds for full hour"){
 			val cron = "* * * * * *"
-			val startTime = DateTime.now.getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).getMillis / 1000
 			val endTime = startTime + ( 60 * 60 )
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 60 * 60 ) { res.length }
@@ -48,7 +47,7 @@ class MainSpec extends FunSpec {
 
 		it("gets all seconds for full hour overnight"){
 			val cron = "* * * * * *"
-			val startTime = DateTime.now.withMonthOfYear(7).withDayOfMonth(13).withHourOfDay(1).withMinuteOfHour(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(7).withDayOfMonth(13).withHourOfDay(1).withMinuteOfHour(1).getMillis / 1000
 			val endTime = startTime + ( 60 * 60 )
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 60 * 60 ) { res.length }
@@ -56,7 +55,7 @@ class MainSpec extends FunSpec {
 
 		it("gets all seconds for full hour morning "){
 			val cron = "* * * * * *"
-			val startTime = DateTime.now.withMonthOfYear(7).withDayOfMonth(12).withHourOfDay(23).withMinuteOfHour(12).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(7).withDayOfMonth(12).withHourOfDay(23).withMinuteOfHour(12).getMillis / 1000
 			val endTime = startTime + ( 60 * 60 )
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 60 * 60 ) { res.length }
@@ -64,46 +63,46 @@ class MainSpec extends FunSpec {
 
 		it("ignores date range outside of allowed month"){
 			val cron = "* * * 1 1 *"
-			val startTime = DateTime.now.withMonthOfYear(2).withDayOfMonth(1).getMillis / 1000
-			val endTime = DateTime.now.withMonthOfYear(3).withDayOfMonth(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(2).withDayOfMonth(1).getMillis / 1000
+			val endTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(3).withDayOfMonth(1).getMillis / 1000
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 0 ) { res.length }
 		}
 
 		it("returns one entry per hour"){
 			val cron = "0 0 * * * *"
-			val startTime = DateTime.now.withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
-			val endTime = DateTime.now.withMonthOfYear(1).withDayOfMonth(2).withHourOfDay(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val endTime = DateTime.now(DateTimeZone.UTC).withMonthOfYear(1).withDayOfMonth(2).withHourOfDay(1).getMillis / 1000
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 24 ) { res.length }
 		}
 
 		it("finds first day of every month for 12 years"){
 			val cron = "0 0 0 1 * *"
-			val startTime = DateTime.now.withYear(2000).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
-			val endTime = DateTime.now.withYear(2012).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withYear(2000).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val endTime = DateTime.now(DateTimeZone.UTC).withYear(2012).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 12 * 12 ) { res.length }
 		}
 
 		it("finds first month in 12 years"){
 			val cron = "0 0 0 1 1 *"
-			val startTime = DateTime.now.withYear(2000).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
-			val endTime = DateTime.now.withYear(2012).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withYear(2000).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val endTime = DateTime.now(DateTimeZone.UTC).withYear(2012).withMonthOfYear(1).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 12 ) { res.length }
 		}
 
 		it("finds five first DOW in a specific month"){
 			val cron = "0 0 0 * * 0"
-			val startTime = DateTime.now.withYear(2012).withMonthOfYear(9).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
-			val endTime = DateTime.now.withYear(2012).withMonthOfYear(9).withDayOfMonth(30).withHourOfDay(1).getMillis / 1000
+			val startTime = DateTime.now(DateTimeZone.UTC).withYear(2012).withMonthOfYear(9).withDayOfMonth(1).withHourOfDay(1).getMillis / 1000
+			val endTime = DateTime.now(DateTimeZone.UTC).withYear(2012).withMonthOfYear(9).withDayOfMonth(30).withHourOfDay(1).getMillis / 1000
 			val res = Scron.parse(cron, startTime, endTime)
 			assertResult( 5 ) { res.length }
 		}
 
 		it("can generate cron formatted string for given time"){
-			val givenTime = DateTime.now.withYear(2012).withMonthOfYear(10).withDayOfMonth(1).withHourOfDay(12)
+			val givenTime = DateTime.now(DateTimeZone.UTC).withYear(2012).withMonthOfYear(10).withDayOfMonth(1).withHourOfDay(12)
 								.withMinuteOfHour(11).withSecondOfMinute(10).getMillis / 1000
 			val expectedCron = "10 11 12 1 10 *"
 			assertResult(expectedCron) { Scron.timeToCron(givenTime) }
