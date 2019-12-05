@@ -1,9 +1,6 @@
-import AssemblyKeys._
 
 // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
 xerial.sbt.Sonatype.sonatypeSettings
-
-assemblySettings
 
 name := "scron"
 
@@ -13,11 +10,9 @@ licenses := Seq("MIT-style" -> url("http://opensource.org/licenses/mit-license.p
 
 homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
-version := "1.0.1"
+version := "1.0.2"
 
-scalaVersion := "2.12.4"
-
-crossScalaVersions := Seq("2.11.6", "2.12.4")
+scalaVersion := "2.13.1"
 
 publishMavenStyle := true
 
@@ -28,15 +23,14 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
-	"org.scalatest" %% "scalatest" % "3.0.1" % "test",
+  "org.scalatest" %% "scalatest" % "3.2.0-M1" % Test,
 	"joda-time" % "joda-time" % "2.6",
-	"org.joda" % "joda-convert" % "1.6"
+	"org.joda" % "joda-convert" % "1.6",
+  "org.scala-lang" % "scala-reflect" % scalaVersion.value
 )
 
-libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
-
 resolvers ++= Seq(
-	"Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/" 
+	"Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 )
 
 

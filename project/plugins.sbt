@@ -1,8 +1,6 @@
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
-
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "1.1")
-
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1") // fot sbt-0.13.5 or higher
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.10")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.8")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")
 
 
 
