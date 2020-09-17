@@ -12,7 +12,7 @@ homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
 version := "1.0.2"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.12.10"
 
 publishMavenStyle := true
 
@@ -23,9 +23,7 @@ publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.2.0-M1" % Test,
-	"joda-time" % "joda-time" % "2.6",
-	"org.joda" % "joda-convert" % "1.6",
+  "org.scalatest" %% "scalatest" % "3.2.2" % Test,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value
 )
 

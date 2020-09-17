@@ -1,6 +1,7 @@
 package com.uniformlyrandom.scron
 
-import org.joda.time.{DateTime, DateTimeZone, Days}
+import java.time.temporal.ChronoUnit
+import java.time.{LocalDate, LocalDateTime, LocalTime, ZoneOffset}
 
 object Scron {
 
@@ -41,44 +42,44 @@ object Scron {
 			return Stream.empty[Long]
 		}
 
-		val start = new DateTime(startTimeUnix * 1000, DateTimeZone.UTC)
-		val end = new DateTime(endTimeUnix * 1000, DateTimeZone.UTC)
-		val epoch = new DateTime(0, DateTimeZone.UTC)
-		val daysBetweenStartEnd = Days.daysBetween(start.withTimeAtStartOfDay(), end.withTimeAtStartOfDay()).getDays
-		val daysSinceEpochStart = Days.daysBetween(epoch, start.withTimeAtStartOfDay()).getDays
-		val daysSinceEpochEnd = Days.daysBetween(epoch, end.withTimeAtStartOfDay()).getDays
+		val start = LocalDateTime.ofEpochSecond(startTimeUnix, 0, ZoneOffset.UTC)
+		val end = LocalDateTime.ofEpochSecond(endTimeUnix, 0, ZoneOffset.UTC)
+		val epoch = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)
+		val daysBetweenStartEnd = ChronoUnit.DAYS.between(LocalDateTime.of(start.toLocalDate, LocalTime.MIDNIGHT), end)
+		val daysSinceEpochStart = ChronoUnit.DAYS.between(LocalDateTime.of(epoch.toLocalDate, LocalTime.MIDNIGHT), start)
+		val daysSinceEpochEnd = ChronoUnit.DAYS.between(LocalDateTime.of(epoch.toLocalDate, LocalTime.MIDNIGHT), end)
 
 		val List(seconds, minutes, hours, days, months, dows) = _genOptions(cron)
 
 		for {	iDay <- Stream.range(0, daysBetweenStartEnd +1)
 				zDay = start.plusDays(iDay)
 					if days.contains(zDay.getDayOfMonth)
-					if months.contains(zDay.getMonthOfYear)
-					if dows.contains(dowMap(zDay.getDayOfWeek))
-				isStartDay = Days.daysBetween(epoch, zDay.withTimeAtStartOfDay()).getDays == daysSinceEpochStart
-				isEndDay = Days.daysBetween(epoch, zDay.withTimeAtStartOfDay()).getDays == daysSinceEpochEnd
+					if months.contains(zDay.getMonthValue)
+					if dows.contains(dowMap(zDay.getDayOfWeek.getValue))
+				isStartDay = ChronoUnit.DAYS.between(epoch, zDay) == daysSinceEpochStart
+				isEndDay = ChronoUnit.DAYS.between(epoch, zDay) == daysSinceEpochEnd
 				hour <- hours.toStream
-					if !isStartDay || hour >= start.getHourOfDay
-					if !isEndDay || hour <= end.getHourOfDay
-				isStartHour = isStartDay && hour == start.getHourOfDay
-				isEndHour = isEndDay && hour == end.getHourOfDay
+					if !isStartDay || hour >= start.getHour
+					if !isEndDay || hour <= end.getHour
+				isStartHour = isStartDay && hour == start.getHour
+				isEndHour = isEndDay && hour == end.getHour
 				minute <- minutes.toStream
-					if !isStartHour || minute >= start.getMinuteOfHour
-					if !isEndHour || minute <= end.getMinuteOfHour
-				isStartMinute = isStartHour && minute == start.getMinuteOfHour
-				isEndMinute = isEndHour && minute == end.getMinuteOfHour
+					if !isStartHour || minute >= start.getMinute
+					if !isEndHour || minute <= end.getMinute
+				isStartMinute = isStartHour && minute == start.getMinute
+				isEndMinute = isEndHour && minute == end.getMinute
 				second <- seconds.toStream
-					if !isStartMinute || second >= start.getSecondOfMinute
-					if !isEndMinute || second < end.getSecondOfMinute
-		} yield zDay.withHourOfDay(hour).withMinuteOfHour(minute).withSecondOfMinute(second).getMillis / 1000
+					if !isStartMinute || second >= start.getSecond
+					if !isEndMinute || second < end.getSecond
+		} yield zDay.withHour(hour).withMinute(minute).withSecond(second).toEpochSecond(ZoneOffset.UTC)
 
 	}
 
 	def timeToCron(unixTime: Long) : String = {
-		val inputTime = new DateTime(unixTime * 1000, DateTimeZone.UTC)
+		val inputTime = LocalDateTime.ofEpochSecond(unixTime, 0, ZoneOffset.UTC)
 
-		s"${inputTime.secondOfMinute.get} ${inputTime.minuteOfHour.get} " +
-			s"${inputTime.hourOfDay.get} ${inputTime.dayOfMonth.get} ${inputTime.monthOfYear.get} *"
+		s"${inputTime.getSecond} ${inputTime.getMinute} " +
+			s"${inputTime.getHour} ${inputTime.getDayOfMonth} ${inputTime.getMonthValue} *"
 	}
 
 	private val rangeWithSteps = "^([0-9*,-]*)/([0-9*]*)$".r
