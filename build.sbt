@@ -12,7 +12,7 @@ homepage := Some(url("https://github.com/uniformlyrandom/scron"))
 
 version := "1.0.2"
 
-scalaVersion := "2.12.10"
+scalaVersion := "2.13.7"
 
 publishMavenStyle := true
 
