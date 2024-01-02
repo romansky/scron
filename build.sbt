@@ -3,8 +3,8 @@ xerial.sbt.Sonatype.sonatypeSettings
 
 name := "scron"
 
-version := "1.0.3"
-scalaVersion := "2.13.7"
+version := CommonVersions.scron
+scalaVersion := CommonVersions.scala
 
 organization := "com.uniformlyrandom"
 licenses := Seq("MIT-style" -> url("https://opensource.org/licenses/mit-license.php"))
@@ -18,7 +18,7 @@ publishTo := sonatypePublishToBundle.value
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.2.9" % Test,
+  "org.scalatest" %% "scalatest" % CommonVersions.scalaTest % Test,
   "org.scala-lang" % "scala-reflect" % scalaVersion.value
 )
 resolvers ++= Seq(
